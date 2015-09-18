@@ -16,12 +16,17 @@
 	<!-- Latest compiled JavaScript -->
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script src="js/angular.min.js"></script>
+	
+	<link href="css/ui-lightness/jquery-ui-1.9.2.custom.css" rel="stylesheet">
+	<script src="js/jquery-1.8.3.js"></script>
+	<script src="js/jquery-ui-1.9.2.custom.js"></script>
 </head>
 <body>
 	<div ng-controller="listadoProductosController">
 		<div class="container">
 			<div class="page-header">
 				<h1>Listado de Productos</h1>      
+				<a class="btn btn-success pull-right" href="productoForm.php">Nuevo Producto</a>
 			</div>
 			<table class="table" ng-table="productos">
 				<thead>
@@ -31,9 +36,6 @@
 						</td>
 						<td class="col-md-3">
 							Precio
-						</td>
-						<td class="col-md-3">
-							Stock
 						</td>
 						<td class="col-md-3">
 						</td>
@@ -50,13 +52,10 @@
 							{{ producto.precio }}
 						</td>
 						<td>
-							{{ producto.stock }}
+							<a class="btn btn-warning" href="productoForm.php?id={{ producto.id_producto }}&descripcion={{ producto.descripcion }}&precio={{ producto.precio }}">Modificar</a>
 						</td>
 						<td>
-							<a href="productoForm.php?id={{ producto.id_producto }}">Modificar</a>
-						</td>
-						<td>
-							<a ng-click="eliminarProducto(producto.id_producto)">Eliminar</a>
+							<a class="btn btn-danger" ng-click="eliminarProducto(producto)">Eliminar</a>
 						</td>
 					</tr>
 				</tbody>
@@ -64,8 +63,14 @@
 		</div>
 	</div>
 </body>
-<div id="dialog-confirm" title="Eliminar Producto">
+<div style="display: none;" id="dialog-confirm" title="Eliminar Producto">
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Esta seguro que desea eliminar el producto?</p>
+</div>
+<div style="display: none;" id="dialog-success" title="Producto Eliminado">
+	<p>El producto ha sido eliminado correctamente</p>
+</div>
+<div style="display: none;" id="dialog-error" title="Error">
+	<p>Hubo un problema al eliminar el producto</p>
 </div>
 <script type="text/javascript">
 	var app = angular.module('venta-pizzeria', []);
@@ -82,20 +87,38 @@
 			});
 		};
 
-		$scope.eliminarProducto = function(idProducto) {
+		$scope.eliminarProducto = function(producto) {
 			$( "#dialog-confirm" ).dialog({
 				resizable: false,
-				height:140,
+				height:200,
 				modal: true,
 				buttons: {
 					"Eliminar Producto": function() {
-						$http.post('ajax/eliminarProducto.php?id=' + idProducto).
+						var $this = $(this); 
+						var method = 'POST';
+						var url = 'ajax/eliminarProducto.php';
+						var data = {
+							'idProducto' : producto.id_producto
+						};
+						$http({
+							method: method,
+							url: url,
+							data: data
+						}).
 						success(function(response) {
-							alert(response);
+							$this.dialog("close");
+							if(response == "success"){
+								var index = $scope.results.indexOf(producto);
+								$scope.results.splice(index, 1);
+								$scope.$apply();
+								$( "#dialog-success" ).dialog();
+							}else{
+								$( "#dialog-error" ).dialog();
+							}
 						}, function(response) {
-							alert("hola");
+							$this.dialog( "close" );
+							$( "#dialog" ).dialog();
 						});
-						$( this ).dialog( "close" );
 					},
 					Cancel: function() {
 						$( this ).dialog( "close" );

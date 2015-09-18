@@ -4,9 +4,8 @@ class producto
 	public $id_producto;
  	public $descripcion;
   	public $precio;
-  	public $stock;
 
-  	public function BorrarProducto($id_producto)
+  	public static function BorrarProducto($id_producto)
 	 {
 
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
@@ -20,34 +19,31 @@ class producto
 	 }
 	 	
 	
-	 public function ModificarProductoParametros()
+	 public static function ModificarProductoParametros($id_producto,$descripcion,$precio)
 	 {
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 			$consulta =$objetoAccesoDato->RetornarConsulta("
 				update productos 
-				set precio:precio,
-				precio=:precio,
-				stock=:stock
+				set descripcion=:descripcion,
+				precio=:precio
 				WHERE id_producto=:id_producto");
-			$consulta->bindValue(':id_producto',$this->id_producto, PDO::PARAM_INT);
-			$consulta->bindValue(':descripcion',$this->descripcion, PDO::PARAM_STR);
-			$consulta->bindValue(':stock', $this->stock, PDO::PARAM_INT);
-			$consulta->bindValue(':precio', $this->precio, PDO::PARAM_INT);
+			$consulta->bindValue(':id_producto',$id_producto, PDO::PARAM_INT);
+			$consulta->bindValue(':descripcion',$descripcion, PDO::PARAM_STR);
+			$consulta->bindValue(':precio', $precio, PDO::PARAM_INT);
 			return $consulta->execute();
 	 }
 
   	public function mostrarDatos()
 	{
-	  	return "Metodo mostrar:".$this->descripcion."  ".$this->precio."  ".$this->stock;
+	  	return "Metodo mostrar:".$this->descripcion."  ".$this->precio;
 	}
 	
-	 public function InsertarElProductoParametros()
+	 public static function InsertarElProductoParametros($descripcion,$precio)
 	 {
 				$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-				$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into productos (descripcion,precio,stock)values(:descripcion,:precio,:stock)");
-				$consulta->bindValue(':descripcion',$this->descripcion, PDO::PARAM_STR);
-				$consulta->bindValue(':stock', $this->stock, PDO::PARAM_INT);
-				$consulta->bindValue(':precio', $this->precio, PDO::PARAM_INT);
+				$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into productos (descripcion,precio)values(:descripcion,:precio)");
+				$consulta->bindValue(':descripcion',$descripcion, PDO::PARAM_STR);
+				$consulta->bindValue(':precio', $precio, PDO::PARAM_INT);
 				$consulta->execute();		
 				return $objetoAccesoDato->RetornarUltimoIdInsertado();
 	 }
@@ -57,7 +53,7 @@ class producto
   	public static function TraerTodosLosProductos()
 	{
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select id_producto,descripcion, precio, stock from productos");
+			$consulta =$objetoAccesoDato->RetornarConsulta("select id_producto,descripcion, precio from productos");
 			$consulta->execute();			
 			return $consulta->fetchAll(PDO::FETCH_CLASS, "producto");		
 	}
@@ -65,7 +61,7 @@ class producto
 	public static function TraerUnProducto($id_producto) 
 	{
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select id_producto, descripcion, precio, stock from productos where id_producto = $id_producto");
+			$consulta =$objetoAccesoDato->RetornarConsulta("select id_producto, descripcion, precio from productos where id_producto = $id_producto");
 			$consulta->execute();
 			$result= $consulta->fetchObject('producto');
 			return $result;				
@@ -78,9 +74,8 @@ class producto
 	public static function TraerUnProductoStockParamNombre($id_producto,$stock) 
 	{
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select descripcion, precio, stock from productos  WHERE id_producto=:id_producto AND stock=:stock");
+			$consulta =$objetoAccesoDato->RetornarConsulta("select descripcion, precio from productos  WHERE id_producto=:id_producto");
 			$consulta->bindValue(':id_producto', $id_producto, PDO::PARAM_INT);
-			$consulta->bindValue(':stock', $stock, PDO::PARAM_STR);
 			$consulta->execute();
 			$result= $consulta->fetchObject('producto');
       		return $result;				
@@ -91,8 +86,8 @@ class producto
 	public static function TraerUnProductoStockParamNombreArray($id_producto,$stock) 
 	{
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select descripcion, precio, stock from productos  WHERE id_producto=:id_producto AND stock=:stock");
-			$consulta->execute(array(':id_producto'=> $id_producto,':stock'=> $stock));
+			$consulta =$objetoAccesoDato->RetornarConsulta("select descripcion, precio from productos  WHERE id_producto=:id_producto");
+			$consulta->execute(array(':id_producto'=> $id_producto));
 			$consulta->execute();
 			$result= $consulta->fetchObject('producto');
       		return $result;				
