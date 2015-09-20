@@ -23,7 +23,7 @@ class Orden
     }
 
 
-    public static function ModificarOrdenParametros($nro_orden,$domicilio_cliente,$telefono_cliente)
+    public static function ModificarOrdenParametros($nro_orden,$domicilio_cliente,$telefono_cliente,$productosOrden)
     {
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
         $consulta =$objetoAccesoDato->RetornarConsulta("
@@ -34,6 +34,8 @@ class Orden
         $consulta->bindValue(':nro_orden',$nro_orden, PDO::PARAM_INT);
         $consulta->bindValue(':domicilio_cliente',$domicilio_cliente, PDO::PARAM_STR);
         $consulta->bindValue(':telefono_cliente', $telefono_cliente, PDO::PARAM_INT);
+        OrdenProducto::EliminarRelacionConOrdenes($nro_orden);
+        Orden::CrearRelacionProductosOrden($nro_orden,$productosOrden);
         return $consulta->execute();
     }
 
