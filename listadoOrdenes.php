@@ -87,8 +87,8 @@
                             </ul>
                         </div>
                     </td>
+                        <a class="btn btn-warning" href="ordenForm.php?nro_orden={{ orden.nro_orden }}">Modificar</a>
                     <td>
-                        <a class="btn btn-warning" href="ordenForm.php?nro_orden={{ orden.nro_orden }}&domicilio_cliente={{ orden.domicilio_cliente }}&telefono_cliente={{ orden.telefono_cliente }}">Modificar</a>
                     </td>
                     <td>
                         <a class="btn btn-danger" ng-click="eliminarOrden(orden)">Cancelar</a>
