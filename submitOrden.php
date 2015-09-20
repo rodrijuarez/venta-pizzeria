@@ -7,4 +7,5 @@ if($_POST["nroOrden"] == ""){
 }else{
     orden::ModificarOrdenParametros($_POST["nroOrden"],$_POST["domicilioCliente"],$_POST["telefonoCliente"],json_decode($_POST["productosOrden"]));
 }
+header('Location: '."listadoOrdenes.php");
 ?>

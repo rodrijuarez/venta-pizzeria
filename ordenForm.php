@@ -40,6 +40,26 @@ if(isset($_GET["nro_orden"])){
 </head>
 <body>
     <div ng-controller="ordenFormController">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Pizzeria</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="listadoProductos.php">Productos<span class="sr-only">(current)</span></a></li>
+                        <li class="active"><a href="listadoOrdenes.php">Ordenes<span class="sr-only">(current)</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <div class="container">
             <div class="page-header">
                 <h1>Orden</h1>
@@ -47,7 +67,7 @@ if(isset($_GET["nro_orden"])){
             <form method="POST" action="submitOrden.php">
                 <input type="hidden" name="nroOrden"
                 value="<?php
-                    echo $orden->nro_orden;
+                echo $orden->nro_orden;
                 ?>">
                 <div class="form-group">
                     <label>Domicilio del Cliente</label>
@@ -67,52 +87,59 @@ if(isset($_GET["nro_orden"])){
                     <div class="panel-heading"> Productos Solicitados
                         <button type="button" class="btn btn-default pull-right add-product" ng-click="addProducto()">+</button>
                     </div>
-                    <input type="hidden" name="productosOrden" value="{{productosOrden}}">
-                    <div class="producto" ng-init="productosOrden = <?php echo json_encode($orden->ordenProducto); ?>"  ng-repeat="producto in productosOrden">
-                        <div class="form-group">
-                            <label>Producto</label>
-                            <select required type="text" class="form-control" ng-options="item.id_producto as item.descripcion for item in productos" ng-model="producto.id_producto">
-                                <option value="" ng-if="false"></option>
-                            </select>
+                    <input type="hidden" name="productosOrden" value="{{productosOrden}}"
+                    ng-init="productosOrden =
+                    <?php
+                    if (isset($orden->ordenProducto)){
+                        echo htmlspecialchars(json_encode($orden->ordenProducto));}else{
+                            echo  htmlspecialchars(json_encode(array()));
+                        }
+                        ?>">
+                        <div class="producto"  ng-repeat="producto in productosOrden">
+                            <div class="form-group">
+                                <label>Producto</label>
+                                <select required type="text" class="form-control" ng-options="item.id_producto as item.descripcion for item in productos" ng-model="producto.id_producto">
+                                    <option value="" ng-if="false"></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Cantidad</label>
+                                <input type="text" class="form-control" placeholder="Cantidad" ng-model="producto.cantidad">
+                            </div>
+                            <hr>
                         </div>
-                        <div class="form-group">
-                            <label>Cantidad</label>
-                            <input type="text" class="form-control" placeholder="Cantidad" ng-model="producto.cantidad">
-                        </div>
-                        <hr>
                     </div>
-                </div>
-                <input class="btn btn-success pull-right" type="submit" value="Save" />
-            </form>
+                    <input class="btn btn-success pull-right" type="submit" value="Save" />
+                </form>
+            </div>
         </div>
-    </div>
-</body>
-<script type="text/javascript">
-    var app = angular.module('venta-pizzeria', []);
+    </body>
+    <script type="text/javascript">
+        var app = angular.module('venta-pizzeria', []);
 
-    app.controller('ordenFormController', function($scope, $http){
+        app.controller('ordenFormController', function($scope, $http){
 
-        $scope.productos = [];
+            $scope.productos = [];
 
-        $scope.productosOrden = [];
+            $scope.productosOrden = [];
 
-        $scope.init = function() {
-            $http.get('ajax/traerProductos.php').
-            success(function(response) {
-                $scope.productos = response;
-                $scope.productoSeleccionado = $scope.productos[0];
-            }, function(response) {
-                alert("hola");
-            });
-        };
-        $scope.init();
+            $scope.init = function() {
+                $http.get('ajax/traerProductos.php').
+                success(function(response) {
+                    $scope.productos = response;
+                    $scope.productoSeleccionado = $scope.productos[0];
+                }, function(response) {
+                    alert("hola");
+                });
+            };
+            $scope.init();
 
-        $scope.addProducto = function(){
-            $scope.productosOrden.push({"id_producto" : "",
-                cantidad:""})
-        };
+            $scope.addProducto = function(){
+                $scope.productosOrden.push({"id_producto" : "",
+                    cantidad:""})
+            };
 
-    });
-</script>
-</html>
+        });
+    </script>
+    </html>
 

@@ -29,12 +29,34 @@ if(isset($_GET["id"])){
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script src="js/angular.min.js"></script>
 
+
 	<link href="css/ui-lightness/jquery-ui-1.9.2.custom.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
 	<script src="js/jquery-1.8.3.js"></script>
 	<script src="js/jquery-ui-1.9.2.custom.js"></script>
 </head>
 <body>
 	<div ng-controller="productoFormController">
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Pizzeria</a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="listadoProductos.php">Productos<span class="sr-only">(current)</span></a></li>
+						<li ><a href="listadoOrdenes.php">Ordenes<span class="sr-only">(current)</span></a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
 		<div class="container">
 			<div class="page-header">
 				<h1>Listado de Productos</h1>

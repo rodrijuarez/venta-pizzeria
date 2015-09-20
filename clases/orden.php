@@ -11,7 +11,7 @@ class Orden
 
     public static function BorrarOrden($nro_orden)
     {
-
+        OrdenProducto::EliminarRelacionConOrdenes($nro_orden);
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
         $consulta =$objetoAccesoDato->RetornarConsulta("
             delete
