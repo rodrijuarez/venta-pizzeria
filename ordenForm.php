@@ -3,13 +3,17 @@
 <?php
 include_once("clases/AccesoDatos.php");
 include_once("clases/orden.php");
+include_once("clases/producto.php");
 $edicion = false;
+$nro_orden ="";
 if(isset($_GET["nro_orden"])){
     $edicion = true;
     $nro_orden = $_GET["nro_orden"];
     $orden = Orden::TraerUnaOrden($nro_orden);
 }else{
     $orden = new Orden();
+    $producto = new Producto();
+    $orden->productos[] = $producto;
 }
 ?>
 <head>
@@ -41,9 +45,9 @@ if(isset($_GET["nro_orden"])){
                 <h1>Orden</h1>
             </div>
             <form method="POST" action="submitOrden.php">
-                <input type="hidden" name="nro_orden"
+                <input type="hidden" name="nroOrden"
                 value="<?php
-                echo $nro_orden;
+                    echo $orden->nro_orden;
                 ?>">
                 <div class="form-group">
                     <label>Domicilio del Cliente</label>
@@ -63,15 +67,19 @@ if(isset($_GET["nro_orden"])){
                     <div class="panel-heading"> Productos Solicitados
                         <button type="button" class="btn btn-default pull-right add-product" ng-click="addProducto()">+</button>
                     </div>
-                    <div class="form-group">
-                        <label>Producto</label>
-                        <select type="text" name="productos" class="form-control" ng-options="item.id_producto as item.descripcion for item in productos" ng-model="productoSeleccionado">
-                            <option value="" ng-if="false"></option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Cantidad</label>
-                        <input type="text" name="Cantidad" class="form-control" placeholder="cantidad">
+                    <input type="hidden" name="productosOrden" value="{{productosOrden}}">
+                    <div class="producto" ng-init="productosOrden = <?php echo json_encode($orden->ordenProducto); ?>"  ng-repeat="producto in productosOrden">
+                        <div class="form-group">
+                            <label>Producto</label>
+                            <select required type="text" class="form-control" ng-options="item.id_producto as item.descripcion for item in productos" ng-model="producto.id_producto">
+                                <option value="" ng-if="false"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Cantidad</label>
+                            <input type="text" class="form-control" placeholder="Cantidad" ng-model="producto.cantidad">
+                        </div>
+                        <hr>
                     </div>
                 </div>
                 <input class="btn btn-success pull-right" type="submit" value="Save" />
@@ -86,6 +94,8 @@ if(isset($_GET["nro_orden"])){
 
         $scope.productos = [];
 
+        $scope.productosOrden = [];
+
         $scope.init = function() {
             $http.get('ajax/traerProductos.php').
             success(function(response) {
@@ -98,7 +108,8 @@ if(isset($_GET["nro_orden"])){
         $scope.init();
 
         $scope.addProducto = function(){
-            alert("Hola");
+            $scope.productosOrden.push({"id_producto" : "",
+                cantidad:""})
         };
 
     });

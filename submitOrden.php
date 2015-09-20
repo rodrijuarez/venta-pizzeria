@@ -1,10 +1,10 @@
 <?php
 include_once("clases/AccesoDatos.php");
 include_once("clases/orden.php");
-if($_POST["nro_orden"] == ""){
-    producto::InsertarLaOrdenParametros($_POST["domicilio_cliente"],$_POST["telefono_cliente"],$_POST["productos"]);
+var_dump($_POST);
+if($_POST["nroOrden"] == ""){
+    orden::InsertarLaOrdenParametros($_POST["domicilioCliente"],$_POST["telefonoCliente"],json_decode($_POST["productosOrden"]));
 }else{
-    producto::ModificarOrdenParametros($_POST["nro_orden"],$_POST["domicilio_cliente"],$_POST["telefono_cliente"],$_POST["productos"]);
+    orden::ModificarOrdenParametros($_POST["nroOrden"],$_POST["domicilioCliente"],$_POST["telefonoCliente"],json_decode($_POST["productosOrden"]));
 }
-header('Location: '."listadoOrdenes.php");
 ?>

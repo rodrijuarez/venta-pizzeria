@@ -77,27 +77,27 @@
                         </td>
                         <td>
                             <div class="btn-group">
-                            <button type="button" class="btn">Productos</button>
-                              <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="caret"></span>
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li ng-repeat="producto in orden.productos"><a href="#">{{producto.descripcion}}</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                        <a class="btn btn-warning" href="ordenForm.php?nro_orden={{ orden.nro_orden }}">Modificar</a>
-                    <td>
-                    </td>
-                    <td>
-                        <a class="btn btn-danger" ng-click="eliminarOrden(orden)">Cancelar</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                                <button type="button" class="btn">Productos</button>
+                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li ng-repeat="producto in orden.productos"><a href="#">{{producto.descripcion}}</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td>
+                            <a class="btn btn-warning" href="ordenForm.php?nro_orden={{ orden.nro_orden }}">Modificar</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" ng-click="eliminarOrden(orden)">Cancelar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 </body>
 <div style="display: none;" id="dialog-confirm" title="Cancelar Orden">
     <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Esta seguro que desea cancelar la orden?</p>

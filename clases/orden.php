@@ -1,11 +1,13 @@
 <?php
 include_once("producto.php");
-class orden
+include_once("ordenProducto.php");
+class Orden
 {
     public $nro_orden;
     public $domicilio_cliente;
     public $telefono_cliente;
     public $productos;
+    public $ordenProducto;
 
     public static function BorrarOrden($nro_orden)
     {
@@ -40,17 +42,29 @@ class orden
         return "Metodo mostrar:".$this->domicilio_cliente."  ".$this->telefono_cliente;
     }
 
-    public static function InsertarLaOrdenParametros($domicilio_cliente,$telefono_cliente)
+    public static function InsertarLaOrdenParametros($domicilio_cliente,$telefono_cliente,$productosOrden)
     {
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
         $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into ordenes (domicilio_cliente,telefono_cliente)values(:domicilio_cliente,:telefono_cliente)");
         $consulta->bindValue(':domicilio_cliente',$domicilio_cliente, PDO::PARAM_STR);
         $consulta->bindValue(':telefono_cliente', $telefono_cliente, PDO::PARAM_INT);
         $consulta->execute();
-        return $objetoAccesoDato->RetornarUltimoIdInsertado();
+        $nro_orden = $objetoAccesoDato->RetornarUltimoIdInsertado();
+        var_dump($productosOrden);
+        Orden::CrearRelacionProductosOrden($nro_orden,$productosOrden);
+        return $nro_orden;
     }
 
-
+    public static function CrearRelacionProductosOrden($nro_orden,$productos){
+        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
+        foreach ($productos as $producto) {
+            $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into ordenes_productos (nro_orden,id_producto,cantidad)values(:nro_orden,:id_producto,:cantidad)");
+            $consulta->bindValue(':nro_orden',$nro_orden, PDO::PARAM_INT);
+            $consulta->bindValue(':id_producto', $producto->id_producto, PDO::PARAM_INT);
+            $consulta->bindValue(':cantidad', $producto->cantidad, PDO::PARAM_INT);
+            $consulta->execute();
+        }
+    }
 
     public static function TraerTodasLasOrdenes()
     {
@@ -88,6 +102,11 @@ class orden
             $producto = new Producto();
             $producto->precio = $row["precio"];
             $producto->descripcion = $row["descripcion"];
+            $ordenProducto = new OrdenProducto();
+            $ordenProducto->id_producto = $row["id_producto"];
+            $ordenProducto->nro_orden = $row["nro_orden"];
+            $ordenProducto->cantidad = $row["cantidad"];
+            $result->ordenProducto[] = $ordenProducto;
             $result->productos[] = $producto;
         }
         return $result;
