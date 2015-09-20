@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="venta-pizzeria"> 
+<html ng-app="venta-pizzeria">
 <?php
 $edicion = false;
 $precio ="";
@@ -28,7 +28,7 @@ if(isset($_GET["id"])){
 	<!-- Latest compiled JavaScript -->
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script src="js/angular.min.js"></script>
-	
+
 	<link href="css/ui-lightness/jquery-ui-1.9.2.custom.css" rel="stylesheet">
 	<script src="js/jquery-1.8.3.js"></script>
 	<script src="js/jquery-ui-1.9.2.custom.js"></script>
@@ -37,21 +37,21 @@ if(isset($_GET["id"])){
 	<div ng-controller="productoFormController">
 		<div class="container">
 			<div class="page-header">
-				<h1>Listado de Productos</h1>      
+				<h1>Listado de Productos</h1>
 			</div>
 			<form method="POST" action="submitProducto.php">
-				<input type="hidden" name="id" 
+				<input type="hidden" name="id"
 				value="<?php
 				echo $id;
 				?>">
 				<div class="form-group">
-					<input type="text" name="descripcion" class="form-control" placeholder="Descripcion"
+					<input type="text" name="descripcion" class="form-control" placeholder="Descripcion" required
 					value="<?php
 					echo $descripcion;
 					?>">
 				</div>
 				<div class="form-group">
-					<input type="text" name="precio" class="form-control" placeholder="Precio" 
+					<input type="text" name="precio" class="form-control" placeholder="Precio" required
 					value="<?php
 					echo $precio;
 					?>">
