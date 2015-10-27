@@ -90,10 +90,15 @@ if(isset($_GET["usuario"])){
 					?>">
 				</div>
 				<div class="form-group">
-					<input type="text" name="sexo" class="form-control" placeholder="Sexo" required
-					value="<?php
-					echo $sexo;
-					?>">
+					<div class="radio">
+						<label><input type="radio" id="femenino" name="sexoFemenino" value="F">Femenino</label>
+					</div>
+					<div class="radio">
+						<label><input type="radio" id="masculino" name="sexoMasculino" value="M">Masculino</label>
+					</div>
+				</div>
+				<div class="checkbox">
+					<label><input type="checkbox" name="tieneCelular">Tiene celular</label>
 				</div>
 				<div class="form-group">
 					<input type="text" name="celular" class="form-control" placeholder="Celular" required
@@ -102,10 +107,14 @@ if(isset($_GET["usuario"])){
 					?>">
 				</div>
 				<div class="form-group">
-					<input type="text" name="rol" class="form-control" placeholder="Rol" required
-					value="<?php
-					echo $rol;
-					?>">
+					<div class="radio">
+						<label>
+						<input type="radio" id="usuario" name="rolUsuario" value="U">Usuario</label>
+					</div>
+					<div class="radio">
+						<label>
+						<input type="radio" id="administrador" name="rolAdministrador" value="A">Administrador</label>
+					</div>
 				</div>
 				<div class="form-group">
 					<input type="text" name="rol" class="form-control" placeholder="Sucursal" required
