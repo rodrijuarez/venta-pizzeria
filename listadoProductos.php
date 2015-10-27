@@ -40,6 +40,7 @@
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="listadoProductos.php">Productos<span class="sr-only">(current)</span></a></li>
 						<li><a href="listadoOrdenes.php">Ordenes<span class="sr-only">(current)</span></a></li>
+						<li><a href="listadoUsuarios.php">Usuarios<span class="sr-only">(current)</span></a></li>
 					</ul>
 				</div>
 			</div>
@@ -66,6 +67,9 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="producto in results">
+						<td>
+							<img ng-src="userImages/productos/{{producto.imagen}}"/>
+						</td>
 						<td>
 							{{ producto.descripcion }}
 						</td>

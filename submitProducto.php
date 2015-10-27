@@ -1,10 +1,17 @@
 <?php
 include_once("clases/AccesoDatos.php");
 include_once("clases/producto.php");
-if($_POST["id"] == ""){
-	producto::InsertarElProductoParametros($_POST["descripcion"],$_POST["precio"]);
-}else{
-	producto::ModificarProductoParametros($_POST["id"],$_POST["descripcion"],$_POST["precio"]);
+
+$dir_subida = $_SERVER['DOCUMENT_ROOT'].'/venta-pizzeria/userImages/productos/';
+$fichero_subido = $dir_subida . basename($_FILES['imagen']['name']);
+$nombreArchivoFinal = $_FILES['imagen']['name'];
+
+if(move_uploaded_file($_FILES['imagen']['tmp_name'], $fichero_subido)){
+    if($_POST["id"] == ""){
+        producto::InsertarElProductoParametros($_POST["descripcion"],$_POST["precio"],$nombreArchivoFinal);
+    }else{
+        producto::ModificarProductoParametros($_POST["id"],$_POST["descripcion"],$_POST["precio"],$nombreArchivoFinal);
+    }
+    header('Location: '."listadoProductos.php");
 }
-header('Location: '."listadoProductos.php");
 ?>

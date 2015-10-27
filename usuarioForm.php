@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html ng-app="venta-pizzeria">
 <?php
-$edicion = false;
-$precio ="";
-$descripcion="";
-$id="";
-if(isset($_GET["id"])){
-	$edicion = true;
-	$id = $_GET["id"];
-	$precio = $_GET["precio"];
-	$descripcion = $_GET["descripcion"];
+$alta = true;
+$usuario= "";
+$password= "";
+$nombre= "";
+$sexo= "";
+$celular= "";
+$rol= "";
+$sucursal= "";
+if(isset($_GET["usuario"])){
+	$alta = false;
+	$usuario= $_GET["usuario"];
+	$password= $_GET["password"];
+	$nombre= $_GET["nombre"];
+	$sexo= $_GET["sexo"];
+	$celular= $_GET["celular"];
+	$rol= $_GET["rol"];
+	$sucursal= $_GET["sucursal"];
 }
 ?>
 <head>
-	<title> Listado de Productos</title>
+	<title> Formulario de Usuario</title>
 
 	<meta charset="utf-8">
 	<script src=" http://code.ionicframework.com/1.0.0-beta.14/js/ionic.bundle.js"></script>
@@ -51,36 +59,59 @@ if(isset($_GET["id"])){
 				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="listadoProductos.php">Productos<span class="sr-only">(current)</span></a></li>
+						<li><a href="listadoProductos.php">Productos<span class="sr-only">(current)</span></a></li>
 						<li ><a href="listadoOrdenes.php">Ordenes<span class="sr-only">(current)</span></a></li>
+						<li class="active"><a href="listadoUsuarios.php">Usuarios<span class="sr-only">(current)</span></a></li>
 					</ul>
 				</div>
 			</div>
 		</nav>
 		<div class="container">
 			<div class="page-header">
-				<h1>Listado de Productos</h1>
+				<h1>Formulario de Usuario</h1>
 			</div>
-			<form method="POST" action="submitProducto.php" enctype="multipart/form-data">
-			 	<input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
-				<input type="hidden" name="id"
-				value="<?php
-				echo $id;
-				?>">
+			<form method="POST" action="submitUsuario.php">
 				<div class="form-group">
-					<input type="text" name="descripcion" class="form-control" placeholder="Descripcion" required
+					<input type="text" name="usuario" class="form-control" placeholder="Usuario" required
 					value="<?php
-					echo $descripcion;
+					echo $usuario;
 					?>">
 				</div>
 				<div class="form-group">
-					<input type="text" name="precio" class="form-control" placeholder="Precio" required
+					<input type="text" name="password" class="form-control" placeholder="Contraseña" required
 					value="<?php
-					echo $precio;
+					echo $password;
 					?>">
 				</div>
 				<div class="form-group">
-					<input type="file" name="imagen"/>
+					<input type="text" name="nombre" class="form-control" placeholder="Nombre" required
+					value="<?php
+					echo $nombre;
+					?>">
+				</div>
+				<div class="form-group">
+					<input type="text" name="sexo" class="form-control" placeholder="Sexo" required
+					value="<?php
+					echo $sexo;
+					?>">
+				</div>
+				<div class="form-group">
+					<input type="text" name="celular" class="form-control" placeholder="Celular" required
+					value="<?php
+					echo $celular;
+					?>">
+				</div>
+				<div class="form-group">
+					<input type="text" name="rol" class="form-control" placeholder="Rol" required
+					value="<?php
+					echo $rol;
+					?>">
+				</div>
+				<div class="form-group">
+					<input type="text" name="rol" class="form-control" placeholder="Sucursal" required
+					value="<?php
+					echo $sucursal;
+					?>">
 				</div>
 				<input class="btn btn-success pull-right" type="submit" value="Save" />
 			</form>

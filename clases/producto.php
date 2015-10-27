@@ -4,6 +4,7 @@ class producto
 	public $id_producto;
 	public $descripcion;
 	public $precio;
+	public $imagen;
 
 	public static function BorrarProducto($id_producto)
 	{
@@ -19,17 +20,19 @@ class producto
 	}
 
 
-	public static function ModificarProductoParametros($id_producto,$descripcion,$precio)
+	public static function ModificarProductoParametros($id_producto,$descripcion,$precio,$imagen)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 		$consulta =$objetoAccesoDato->RetornarConsulta("
 			update productos
 			set descripcion=:descripcion,
-			precio=:precio
+			precio=:precio,
+			imagen=:imagen
 			WHERE id_producto=:id_producto");
 		$consulta->bindValue(':id_producto',$id_producto, PDO::PARAM_INT);
 		$consulta->bindValue(':descripcion',$descripcion, PDO::PARAM_STR);
 		$consulta->bindValue(':precio', $precio, PDO::PARAM_INT);
+		$consulta->bindValue(':imagen', $imagen, PDO::PARAM_STR);
 		return $consulta->execute();
 	}
 
@@ -38,12 +41,13 @@ class producto
 		return "Metodo mostrar:".$this->descripcion."  ".$this->precio;
 	}
 
-	public static function InsertarElProductoParametros($descripcion,$precio)
+	public static function InsertarElProductoParametros($descripcion,$precio,$imagen)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into productos (descripcion,precio)values(:descripcion,:precio)");
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into productos (descripcion,precio,imagen) values(:descripcion,:precio,:imagen)");
 		$consulta->bindValue(':descripcion',$descripcion, PDO::PARAM_STR);
 		$consulta->bindValue(':precio', $precio, PDO::PARAM_INT);
+		$consulta->bindValue(':imagen', $imagen, PDO::PARAM_STR);
 		$consulta->execute();
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();
 	}
@@ -53,7 +57,7 @@ class producto
 	public static function TraerTodosLosProductos()
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-		$consulta =$objetoAccesoDato->RetornarConsulta("select id_producto,descripcion, precio from productos");
+		$consulta =$objetoAccesoDato->RetornarConsulta("select id_producto,descripcion, precio,imagen from productos");
 		$consulta->execute();
 		return $consulta->fetchAll(PDO::FETCH_CLASS, "producto");
 	}
