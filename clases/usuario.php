@@ -72,7 +72,7 @@ class usuario
 	public static function TraerUnUsuario($usuario)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-		$consulta =$objetoAccesoDato->RetornarConsulta("usuario,password,nombre,sexo,celular,rol,id_sucursal from usuarios where usuario = $usuario");
+		$consulta =$objetoAccesoDato->RetornarConsulta("select usuario,password,nombre,sexo,celular,rol,id_sucursal from usuarios where usuario = '$usuario'");
 		$consulta->execute();
 		$result= $consulta->fetchObject('usuario');
 		return $result;
