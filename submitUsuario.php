@@ -1,13 +1,14 @@
 <?php
 include_once("clases/AccesoDatos.php");
 include_once("clases/usuario.php");
-
-if($_POST["alta"] == "true"){
-    usuario::InsertarElUsuarioParametros($_POST["usuario"],$_POST["password"],$_POST["nombre"],
-        $_POST["sexo"],$_POST["celular"],$_POST["rol"],$_POST["sucursal"]);
+$postdata = file_get_contents("php://input");
+$request = json_decode($postdata);
+if($request->alta == "true"){
+    usuario::InsertarElUsuarioParametros($request->usuario,$request->password,$request->nombre,
+        $request->sexo,$request->celular,$request->rol,$request->sucursal);
 }else{
-    usuario::ModificarUsuarioParametros($_POST["usuario"],$_POST["password"],$_POST["nombre"],
-        $_POST["sexo"],$_POST["celular"],$_POST["rol"],$_POST["sucursal"]);
+    usuario::ModificarUsuarioParametros($request->usuario,$request->password,$request->nombre,
+        $request->sexo,$request->celular,$request->rol,$request->sucursal);
 }
-header('Location: '."listadoUsuarios.php");
+echo("La operacion resultó exitosa");
 ?>
