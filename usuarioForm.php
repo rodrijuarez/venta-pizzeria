@@ -1,25 +1,5 @@
 <!DOCTYPE html>
 <html ng-app="venta-pizzeria">
-<?php
-$alta = true;
-$usuario= "";
-$password= "";
-$nombre= "";
-$sexo= "";
-$celular= "";
-$rol= "";
-$sucursal= "";
-if(isset($_GET["usuario"])){
-	$alta = false;
-	$usuario= $_GET["usuario"];
-	$password= $_GET["password"];
-	$nombre= $_GET["nombre"];
-	$sexo= $_GET["sexo"];
-	$celular= $_GET["celular"];
-	$rol= $_GET["rol"];
-	$sucursal= $_GET["sucursal"];
-}
-?>
 <head>
 	<title> Formulario de Usuario</title>
 
@@ -36,6 +16,7 @@ if(isset($_GET["usuario"])){
 	<!-- Latest compiled JavaScript -->
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script src="js/angular.min.js"></script>
+	<script src="js/angular/controller/usuario.js"></script>
 
 
 	<link href="css/ui-lightness/jquery-ui-1.9.2.custom.css" rel="stylesheet">
@@ -44,7 +25,7 @@ if(isset($_GET["usuario"])){
 	<script src="js/jquery-ui-1.9.2.custom.js"></script>
 </head>
 <body>
-	<div ng-controller="productoFormController">
+	<div ng-controller="usuarioFormController">
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="container-fluid">
 				<!-- Brand and toggle get grouped for better mobile display -->
@@ -70,65 +51,51 @@ if(isset($_GET["usuario"])){
 			<div class="page-header">
 				<h1>Formulario de Usuario</h1>
 			</div>
-			<form method="POST" action="submitUsuario.php">
+			<form>
 				<div class="form-group">
-					<input type="text" name="usuario" class="form-control" placeholder="Usuario" required
-					value="<?php
-					echo $usuario;
-					?>">
+					<input type="text" ng-model="usuario.usuario" class="form-control" placeholder="Usuario">
 				</div>
 				<div class="form-group">
-					<input type="text" name="password" class="form-control" placeholder="Contraseña" required
-					value="<?php
-					echo $password;
-					?>">
+					<input type="text" ng-model="usuario.password" class="form-control" placeholder="Contraseña">
 				</div>
 				<div class="form-group">
-					<input type="text" name="nombre" class="form-control" placeholder="Nombre" required
-					value="<?php
-					echo $nombre;
-					?>">
+					<input type="text" ng-model="usuario.nombre" class="form-control" placeholder="Nombre">
 				</div>
 				<div class="form-group">
 					<fieldset id="sexo">
 						<div class="radio">
-							<label><input type="radio" id="femenino" name="sexo" value="F">Femenino</label>
+							<label><input type="radio" ng-model="usuario.sexo" value="F">Femenino</label>
 						</div>
 						<div class="radio">
-							<label><input type="radio" id="masculino" name="sexo" value="M">Masculino</label>
+							<label><input type="radio" ng-model="usuario.sexo" value="M">Masculino</label>
 						</div>
 					</fieldset>
 				</div>
 				<div class="checkbox">
-					<label><input type="checkbox" name="tieneCelular">Tiene celular</label>
+					<label><input type="checkbox" ng-model="usuario.tieneCelular">Tiene celular</label>
 				</div>
-				<div class="form-group">
-					<input type="text" name="celular" class="form-control" placeholder="Celular" required
-					value="<?php
-					echo $celular;
-					?>">
+				<div class="form-group" ng-show="usuario.tieneCelular">
+					<input type="text" ng-model="usuario.celular" class="form-control" placeholder="Celular">
 				</div>
 				<div class="form-group">
 					<fieldset id="rol">
 						<div class="radio">
 							<label>
-								<input type="radio" id="usuario" name="rol" value="U"/>Usuario
+								<input type="radio" ng-model="usuario.rol" name="rol" value="U"/>Usuario
 							</label>
 						</div>
 						<div class="radio">
 							<label>
-								<input type="radio" id="administrador" name="rol" value="A">Administrador
+								<input type="radio" ng-model="usuario.rol" name="rol" value="A">Administrador
 							</label>
 						</div>
 					</fieldset>
 				</div>
 				<div class="form-group">
-					<input type="text" name="rol" class="form-control" placeholder="Sucursal" required
-					value="<?php
-					echo $sucursal;
-					?>">
+					<input type="text" ng-model="usuario.sucursal" class="form-control" placeholder="Sucursal">
 				</div>
-				<input class="btn btn-success pull-right" type="submit" value="Save" />
+				<pre>user = {{usuario | json}}</pre>
+				<input class="btn btn-success pull-right" ng-click="guardar(usuario)" value="Guardar" />
 			</form>
 		</div>
 	</div>
