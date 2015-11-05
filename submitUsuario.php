@@ -4,7 +4,7 @@ include_once("clases/usuario.php");
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 if($request->alta == "true"){
-    usuario::InsertarElUsuarioParametros($request->usuario,$request->password,$request->nombre,
+    usuario::InsertarElUsuarioParametros($request->usuario,md5($request->password),$request->nombre,
         $request->sexo,$request->celular,$request->rol,$request->sucursal);
 }else{
     usuario::ModificarUsuarioParametros($request->usuario,$request->password,$request->nombre,

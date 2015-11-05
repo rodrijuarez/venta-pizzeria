@@ -40,6 +40,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="listadoProductos.php">Productos<span class="sr-only">(current)</span></a></li>
                         <li class="active"><a href="listadoOrdenes.php">Ordenes<span class="sr-only">(current)</span></a></li>
+                        <li><a href="listadoUsuarios.php">Usuarios<span class="sr-only">(current)</span></a></li>
                     </ul>
                 </div>
             </div>

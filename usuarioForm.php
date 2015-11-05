@@ -16,6 +16,7 @@
 	<!-- Latest compiled JavaScript -->
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script src="js/angular.min.js"></script>
+	<script src="js/angular/service/utils/utils.js"></script>
 	<script src="js/angular/controller/usuario.js"></script>
 
 
@@ -74,7 +75,7 @@
 				<div class="checkbox">
 					<label><input type="checkbox" ng-model="usuario.tieneCelular">Tiene celular</label>
 				</div>
-				<div class="form-group" ng-show="usuario.tieneCelular">
+				<div class="form-group" ng-show="usuario.tieneCelular || usuario.celular != null">
 					<input type="text" ng-model="usuario.celular" class="form-control" placeholder="Celular">
 				</div>
 				<div class="form-group">
@@ -94,7 +95,6 @@
 				<div class="form-group">
 					<input type="text" ng-model="usuario.sucursal" class="form-control" placeholder="Sucursal">
 				</div>
-				<pre>user = {{usuario | json}}</pre>
 				<input class="btn btn-success pull-right" ng-click="guardar(usuario)" value="Guardar" />
 			</form>
 		</div>
