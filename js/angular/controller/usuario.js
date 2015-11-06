@@ -6,6 +6,7 @@ angular.module('venta-pizzeria').controller('usuarioFormController', function($s
 
     $scope.traerUsuario = function(usuario){
         $http.get('/venta-pizzeria/ajax/traerUsuario.php?usuario=' + usuario).then($scope.cargarUsuario);
+        $scope.edicion = true;
     }
 
     $scope.cargarUsuario = function(response){

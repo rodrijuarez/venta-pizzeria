@@ -8,6 +8,7 @@ class Orden
     public $telefono_cliente;
     public $productos;
     public $ordenProducto;
+    public $paga_con_cambio;
 
     public static function BorrarOrden($nro_orden)
     {
@@ -23,7 +24,7 @@ class Orden
     }
 
 
-    public static function ModificarOrdenParametros($nro_orden,$domicilio_cliente,$telefono_cliente,$productosOrden)
+    public static function ModificarOrdenParametros($nro_orden,$domicilio_cliente,$telefono_cliente,$productosOrden,$paga_con_cambio)
     {
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
         $consulta =$objetoAccesoDato->RetornarConsulta("
@@ -34,6 +35,7 @@ class Orden
         $consulta->bindValue(':nro_orden',$nro_orden, PDO::PARAM_INT);
         $consulta->bindValue(':domicilio_cliente',$domicilio_cliente, PDO::PARAM_STR);
         $consulta->bindValue(':telefono_cliente', $telefono_cliente, PDO::PARAM_INT);
+        $consulta->bindValue(':paga_con_cambio', $paga_con_cambio, PDO::PARAM_BOOL);
         OrdenProducto::EliminarRelacionConOrdenes($nro_orden);
         Orden::CrearRelacionProductosOrden($nro_orden,$productosOrden);
         return $consulta->execute();
@@ -44,12 +46,13 @@ class Orden
         return "Metodo mostrar:".$this->domicilio_cliente."  ".$this->telefono_cliente;
     }
 
-    public static function InsertarLaOrdenParametros($domicilio_cliente,$telefono_cliente,$productosOrden)
+    public static function InsertarLaOrdenParametros($domicilio_cliente,$telefono_cliente,$productosOrden,$paga_con_cambio)
     {
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
         $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into ordenes (domicilio_cliente,telefono_cliente)values(:domicilio_cliente,:telefono_cliente)");
         $consulta->bindValue(':domicilio_cliente',$domicilio_cliente, PDO::PARAM_STR);
         $consulta->bindValue(':telefono_cliente', $telefono_cliente, PDO::PARAM_INT);
+        $consulta->bindValue(':paga_con_cambio', $paga_con_cambio, PDO::PARAM_BOOL);
         $consulta->execute();
         $nro_orden = $objetoAccesoDato->RetornarUltimoIdInsertado();
         var_dump($productosOrden);
@@ -71,7 +74,7 @@ class Orden
     public static function TraerTodasLasOrdenes()
     {
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-        $consulta =$objetoAccesoDato->RetornarConsulta("select ordenes.nro_orden, domicilio_cliente, telefono_cliente, productos.id_producto, productos.descripcion, productos.precio,ordenes_productos.cantidad from ordenes INNER JOIN ordenes_productos ON ordenes_productos.nro_orden = ordenes.nro_orden INNER JOIN productos ON productos.id_producto = ordenes_productos.id_producto");
+        $consulta =$objetoAccesoDato->RetornarConsulta("select ordenes.nro_orden, domicilio_cliente, telefono_cliente,paga_con_cambio, productos.id_producto, productos.descripcion, productos.precio,ordenes_productos.cantidad from ordenes INNER JOIN ordenes_productos ON ordenes_productos.nro_orden = ordenes.nro_orden INNER JOIN productos ON productos.id_producto = ordenes_productos.id_producto");
         $consulta->execute();
 
         while (($row = $consulta->fetch(PDO::FETCH_ASSOC)) !== false) {
@@ -79,6 +82,7 @@ class Orden
             $orden->nro_orden = $row["nro_orden"];
             $orden->domicilio_cliente = $row["domicilio_cliente"];
             $orden->telefono_cliente = $row["telefono_cliente"];
+            $orden->paga_con_cambio = $row["paga_con_cambio"];
             $producto = new Producto();
             $producto->id_producto = $row["id_producto"];
             $producto->descripcion = $row["descripcion"];
@@ -94,13 +98,14 @@ class Orden
     public static function TraerUnaOrden($nro_orden)
     {
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-        $consulta =$objetoAccesoDato->RetornarConsulta("select ordenes.nro_orden, domicilio_cliente, telefono_cliente, productos.id_producto, productos.descripcion, productos.precio,ordenes_productos.cantidad from ordenes INNER JOIN ordenes_productos ON ordenes_productos.nro_orden = ordenes.nro_orden INNER JOIN productos ON productos.id_producto = ordenes_productos.id_producto where ordenes.nro_orden = $nro_orden");
+        $consulta =$objetoAccesoDato->RetornarConsulta("select ordenes.nro_orden, domicilio_cliente, telefono_cliente,paga_con_cambio, productos.id_producto, productos.descripcion, productos.precio,ordenes_productos.cantidad from ordenes INNER JOIN ordenes_productos ON ordenes_productos.nro_orden = ordenes.nro_orden INNER JOIN productos ON productos.id_producto = ordenes_productos.id_producto where ordenes.nro_orden = $nro_orden");
         $consulta->execute();
         $result = new Orden();
         while (($row = $consulta->fetch(PDO::FETCH_ASSOC)) !== false) {
             $result->nro_orden = $row["nro_orden"];
             $result->domicilio_cliente = $row["domicilio_cliente"];
             $result->telefono_cliente = $row["telefono_cliente"];
+            $result->paga_con_cambio = $row["paga_con_cambio"];
             $producto = new Producto();
             $producto->precio = $row["precio"];
             $producto->descripcion = $row["descripcion"];

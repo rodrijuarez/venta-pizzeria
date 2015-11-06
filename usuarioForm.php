@@ -54,10 +54,10 @@
 			</div>
 			<form>
 				<div class="form-group">
-					<input type="text" ng-model="usuario.usuario" class="form-control" placeholder="Usuario">
+					<input ng-disabled="edicion" type="text" ng-model="usuario.usuario" class="form-control" placeholder="Usuario">
 				</div>
 				<div class="form-group">
-					<input type="text" ng-model="usuario.password" class="form-control" placeholder="Contraseña">
+					<input ng-disabled="edicion" type="text" ng-model="usuario.password" class="form-control" placeholder="Contraseña">
 				</div>
 				<div class="form-group">
 					<input type="text" ng-model="usuario.nombre" class="form-control" placeholder="Nombre">
