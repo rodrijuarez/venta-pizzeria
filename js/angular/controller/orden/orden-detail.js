@@ -9,7 +9,6 @@ angular.module('venta-pizzeria').controllerProvider.register('OrdenDetailControl
     }
 
     $scope.mostrarMensaje = function(response){
-        alert(response.data);
         $location.path('/ordenes');
         $location.replace();
     }
