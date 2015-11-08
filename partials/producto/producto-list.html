@@ -2,6 +2,7 @@
     <div class="page-header">
         <h1>Listado de Productos</h1>
         <a class="btn btn-success pull-right" href="#/producto/nuevo">Nuevo Producto</a>
+            <a class="btn btn-success pull-right" ng-csv="results" filename="productos.csv">Exportar</a>
     </div>
     <table class="table" ng-table="productos">
         <thead>

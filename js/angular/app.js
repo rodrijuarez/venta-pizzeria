@@ -1,5 +1,5 @@
 angular.module('Authentication', []);
-var app = angular.module('venta-pizzeria', ['ngRoute','ngFileUpload','ngCookies','Authentication']);
+var app = angular.module('venta-pizzeria', ['ngRoute','ngFileUpload','ngCookies','Authentication', 'ngCsv']);
 
 app.config(function($routeProvider,$controllerProvider, $compileProvider, $filterProvider, $provide) {
     app.controllerProvider = $controllerProvider;
