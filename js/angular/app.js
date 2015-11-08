@@ -21,7 +21,7 @@ app.config(function($routeProvider,$controllerProvider, $compileProvider, $filte
     uiGmapGoogleMapApiProvider.configure({
         key : 'AIzaSyCxb37T9TC2xma21OAQ5mptPDQXNi-n_uA',
                 v : '3.20', // defaults to latest 3.X anyhow
-                libraries : 'weather,geometry,visualization'
+                libraries : 'weather,geometry,visualization,places'
             });
 
     $routeProvider.when('/login', {

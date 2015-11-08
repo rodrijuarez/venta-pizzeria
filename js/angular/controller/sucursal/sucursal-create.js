@@ -13,6 +13,30 @@ angular.module('venta-pizzeria').controllerProvider.register('SucursalCreationCo
         $scope.options = {scrollwheel: true};
         $scope.locales = [];
         $scope.locales.push({id:1,latitude:-34.6122402,longitude:-58.394864,title:'Ugi'});
-    }
-    $scope.init();
-});
+        $scope.events = {
+            places_changed: function (searchBox) {
+                var place = searchBox.getPlaces();
+                if (!place || place == 'undefined' || place.length == 0) {
+                    console.log('no place data :(');
+                        return;
+                    }
+
+                    $scope.map = {
+                        "center": {
+                            "latitude": place[0].geometry.location.lat(),
+                            "longitude": place[0].geometry.location.lng()
+                        },
+                        "zoom": 18
+                    };
+                    $scope.marker = {
+                        id: 0,
+                        coords: {
+                            latitude: place[0].geometry.location.lat(),
+                            longitude: place[0].geometry.location.lng()
+                        }
+                    };
+                }
+            };
+        }
+        $scope.init();
+    });
