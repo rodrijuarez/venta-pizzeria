@@ -30,7 +30,7 @@
                     {{ resultado.sucursal }}
                 </td>
                 <td>
-                <a class="btn btn-warning" href="#/usuario/detalle/{{resultado.usuario}}">Modificar</a>
+                    <a class="btn btn-warning" href="#/usuario/detalle/{{resultado.usuario}}">Modificar</a>
                 </td>
                 <td>
                     <a class="btn btn-danger" ng-click="eliminarUsuario(resultado)">Eliminar</a>
@@ -38,4 +38,13 @@
             </tr>
         </tbody>
     </table>
+</div>
+<div style="display: none;" id="dialog-confirm" title="Eliminar Usuario">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Esta seguro que desea eliminar el usuario?</p>
+</div>
+<div style="display: none;" id="dialog-success" title="Usuario Eliminado">
+    <p>El usuario ha sido eliminado correctamente</p>
+</div>
+<div style="display: none;" id="dialog-error" title="Error">
+    <p>Hubo un problema al eliminar el usuario</p>
 </div>

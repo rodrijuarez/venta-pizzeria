@@ -8,13 +8,13 @@ angular.module('venta-pizzeria').controllerProvider.register('UsuarioListControl
         });
     };
 
-    $scope.eliminarOrden = function(usuario) {
+    $scope.eliminarUsuario = function(usuario) {
         $( "#dialog-confirm" ).dialog({
             resizable: false,
             height:200,
             modal: true,
             buttons: {
-                "EliminarUsuario": function() {
+                "Eliminar Usuario": function() {
                     var $this = $(this);
                     var method = 'POST';
                     var url = 'ajax/eliminarUsuario.php';
@@ -29,7 +29,7 @@ angular.module('venta-pizzeria').controllerProvider.register('UsuarioListControl
                     success(function(response) {
                         $this.dialog("close");
                         if(response == "success"){
-                            var index = $scope.results.indexOf(orden);
+                            var index = $scope.results.indexOf(usuario);
                             $scope.results.splice(index, 1);
                             $scope.$apply();
                             $( "#dialog-success" ).dialog();

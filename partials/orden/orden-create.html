@@ -23,7 +23,7 @@
             <div class="producto"  ng-repeat="producto in orden.productosOrden">
                 <div class="form-group">
                     <label>Producto</label>
-                    <select required type="text" class="form-control" ng-options="item.id_producto as item.descripcion for item in productos" ng-model="producto.id_producto">
+                    <select required type="text" class="form-control" ng-options="item.idProducto as item.descripcion for item in productos" ng-model="producto.idProducto">
                         <option value="" ng-if="false"></option>
                     </select>
                 </div>

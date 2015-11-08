@@ -31,7 +31,7 @@ angular.module('venta-pizzeria').controllerProvider.register('OrdenCreationContr
     $scope.init();
 
     $scope.addProducto = function(){
-        $scope.orden.productosOrden.push({"id_producto" : "",
+        $scope.orden.productosOrden.push({"idProducto" : "",
             cantidad:""})
     };
 });

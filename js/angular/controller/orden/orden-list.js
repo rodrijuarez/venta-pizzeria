@@ -19,7 +19,7 @@ angular.module('venta-pizzeria').controllerProvider.register('OrdenListControlle
                     var method = 'POST';
                     var url = 'ajax/eliminarOrden.php';
                     var data = {
-                        'nro_orden' : orden.nro_orden
+                        'nroOrden' : orden.nroOrden
                     };
                     $http({
                         method: method,

@@ -3,7 +3,7 @@
         <h1>Orden</h1>
     </div>
     <form>
-        <input type="hidden" ng-model="orden.nroOrden">
+        <input type="hidden" ng-model="orden.nroOden">
         <div class="form-group">
             <label>Domicilio del Cliente</label>
             <input ng-model="orden.domicilioCliente" type="text" class="form-control" placeholder="Domicilio del cliente" required>
@@ -19,7 +19,6 @@
             <div class="panel-heading"> Productos Solicitados
                 <button type="button" class="btn btn-default pull-right add-product" ng-click="addProducto()">+</button>
             </div>
-            <input type="hidden" name="productos" value="{{orden.productos}}">
             <div class="producto"  ng-repeat="producto in orden.ordenProducto">
                 <div class="form-group">
                     <label>Producto</label>

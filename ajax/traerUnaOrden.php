@@ -1,5 +1,5 @@
 <?php
     include_once("../clases/AccesoDatos.php");
     include_once("../clases/orden.php");
-    echo json_encode(orden::TraerUnaOrden(23));
+    echo json_encode(orden::TraerUnaOrden($_GET["orden"]));
 ?>
