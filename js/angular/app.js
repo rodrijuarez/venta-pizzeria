@@ -1,7 +1,7 @@
 angular.module('Authentication', []);
-var app = angular.module('venta-pizzeria', ['ngRoute','ngFileUpload','ngCookies','Authentication', 'ngCsv']);
+var app = angular.module('venta-pizzeria', ['ngRoute','ngFileUpload','ngCookies','Authentication', 'ngCsv','uiGmapgoogle-maps']);
 
-app.config(function($routeProvider,$controllerProvider, $compileProvider, $filterProvider, $provide) {
+app.config(function($routeProvider,$controllerProvider, $compileProvider, $filterProvider, $provide,uiGmapGoogleMapApiProvider) {
     app.controllerProvider = $controllerProvider;
     app.compileProvider = $compileProvider;
     app.routeProvider = $routeProvider;
@@ -17,6 +17,12 @@ app.config(function($routeProvider,$controllerProvider, $compileProvider, $filte
             return deferred.promise;
         }];
     };
+
+    uiGmapGoogleMapApiProvider.configure({
+        key : 'AIzaSyCxb37T9TC2xma21OAQ5mptPDQXNi-n_uA',
+                v : '3.20', // defaults to latest 3.X anyhow
+                libraries : 'weather,geometry,visualization'
+            });
 
     $routeProvider.when('/login', {
         controller: 'Login',
