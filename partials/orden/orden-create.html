@@ -12,6 +12,9 @@
             <label>Telefono del Cliente</label>
             <input ng-model="orden.telefonoCliente" type="text" name="telefonoCliente" class="form-control" placeholder="Telefono del cliente" required>
         </div>
+        <div class="checkbox">
+            <label><input ng-model="orden.pagaConCambio" type="checkbox" name="pagaConCambio" ng-true-value="1" ng-false-value="0">Paga con cambio</label>
+        </div>
         <div class="panel panel-default">
             <div class="panel-heading"> Productos Solicitados
                 <button type="button" class="btn btn-default pull-right add-product" ng-click="addProducto()">+</button>
@@ -31,7 +34,7 @@
                 <hr>
             </div>
         </div>
-        <input class="btn btn-success pull-right" type="submit" value="Save" />
+        <input class="btn btn-success pull-right" ng-click="guardar(orden)" type="submit" value="Save" />
     </form>
 </div>
 </div>

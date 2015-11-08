@@ -1,7 +1,18 @@
-angular.module('venta-pizzeria').controllerProvider.register('OrdenCreationController', function($scope, $http,$routeParams){
+angular.module('venta-pizzeria').controllerProvider.register('OrdenCreationController', function($scope, $http,$routeParams,$location){
     $scope.productos = [];
 
     $scope.productosOrden = [];
+
+    $scope.guardar = function(orden){
+        orden.alta = ($routeParams.id != undefined) ? false : true;
+        $http.post('/venta-pizzeria/submitOrden.php',orden).then($scope.mostrarMensaje);
+    }
+
+    $scope.mostrarMensaje = function(response){
+        alert(response.data);
+        $location.path('/ordenes');
+        $location.replace();
+    }
 
     $scope.traerOrden = function(id){
         $http.get('/venta-pizzeria/ajax/traerUnaOrden.php?orden=' + id).then($scope.cargarOrden);
@@ -20,6 +31,12 @@ angular.module('venta-pizzeria').controllerProvider.register('OrdenCreationContr
         }, function(response) {
             alert("hola");
         });
+        if($routeParams.id != undefined){
+            $scope.traerOrden($routeParams.id);
+        }else{
+            $scope.orden = {productosOrden: []};
+        }
+        $scope.orden.pagaConCambio = 1;
     };
     $scope.init();
 
@@ -27,9 +44,4 @@ angular.module('venta-pizzeria').controllerProvider.register('OrdenCreationContr
         $scope.orden.productosOrden.push({"id_producto" : "",
             cantidad:""})
     };
-    if($routeParams.id != undefined){
-        $scope.traerOrden($routeParams.id);
-    }else{
-        $scope.orden = {productosOrden: []};
-    }
 });

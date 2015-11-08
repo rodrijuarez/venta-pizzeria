@@ -49,13 +49,12 @@ class Orden
     public static function InsertarLaOrdenParametros($domicilio_cliente,$telefono_cliente,$productosOrden,$paga_con_cambio)
     {
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-        $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into ordenes (domicilio_cliente,telefono_cliente)values(:domicilio_cliente,:telefono_cliente)");
+        $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into ordenes (domicilio_cliente,telefono_cliente,paga_con_cambio)values(:domicilio_cliente,:telefono_cliente,:paga_con_cambio)");
         $consulta->bindValue(':domicilio_cliente',$domicilio_cliente, PDO::PARAM_STR);
         $consulta->bindValue(':telefono_cliente', $telefono_cliente, PDO::PARAM_INT);
-        $consulta->bindValue(':paga_con_cambio', $paga_con_cambio, PDO::PARAM_BOOL);
+        $consulta->bindValue(':paga_con_cambio', $paga_con_cambio, PDO::PARAM_INT);
         $consulta->execute();
         $nro_orden = $objetoAccesoDato->RetornarUltimoIdInsertado();
-        var_dump($productosOrden);
         Orden::CrearRelacionProductosOrden($nro_orden,$productosOrden);
         return $nro_orden;
     }
