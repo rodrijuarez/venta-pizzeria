@@ -1,4 +1,5 @@
-var app = angular.module('venta-pizzeria', ['ngRoute','ngFileUpload']);
+angular.module('Authentication', []);
+var app = angular.module('venta-pizzeria', ['ngRoute','ngFileUpload','ngCookies','Authentication']);
 
 app.config(function($routeProvider,$controllerProvider, $compileProvider, $filterProvider, $provide) {
     app.controllerProvider = $controllerProvider;
@@ -16,6 +17,12 @@ app.config(function($routeProvider,$controllerProvider, $compileProvider, $filte
             return deferred.promise;
         }];
     };
+
+    $routeProvider.when('/login', {
+        controller: 'Login',
+        templateUrl: 'partials/authentication/login.html',
+        resolve:controllerLoadingFactory(['js/angular/controller/authentication/login.js'])
+    })
 
     $routeProvider.when('/ordenes', {
         templateUrl : 'partials/orden/orden-list.html',
@@ -74,4 +81,18 @@ app.config(function($routeProvider,$controllerProvider, $compileProvider, $filte
     $routeProvider.otherwise({
         redirectTo : '/ordenes'
     });
-} );
+} ).run(['$rootScope', '$location', '$cookies', '$http',
+function ($rootScope, $location, $cookies, $http) {
+        // keep user logged in after page refresh
+        $rootScope.globals = $cookies.get('globals') || {};
+        if ($rootScope.globals.currentUser) {
+            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
+        }
+
+        $rootScope.$on('$locationChangeStart', function (event, next, current) {
+            // redirect to login page if not logged in
+            if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
+                $location.path('/login');
+            }
+        });
+    }]);
