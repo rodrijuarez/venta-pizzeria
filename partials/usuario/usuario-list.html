@@ -1,0 +1,41 @@
+ <div class="container">
+    <div class="page-header">
+        <h1>Listado de Usuarios</h1>
+        <a class="btn btn-success pull-right" href="#/usuario/nuevo">Nuevo Usuario</a>
+    </div>
+    <table class="table" ng-table="usuarios">
+        <thead>
+            <tr>
+                <td class="col-md-4">
+                    Nombre del Usuario
+                </td>
+                <td class="col-md-4">
+                    Sucursal del Usuario
+                </td>
+                <td class="col-md-3">
+                </td>
+                <td class="col-md-2">
+                </td>
+                <td class="col-md-2">
+
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="resultado in results">
+                <td>
+                    {{ resultado.usuario }}
+                </td>
+                <td>
+                    {{ resultado.sucursal }}
+                </td>
+                <td>
+                <a class="btn btn-warning" href="#/usuario/detalle/{{resultado.usuario}}">Modificar</a>
+                </td>
+                <td>
+                    <a class="btn btn-danger" ng-click="eliminarUsuario(resultado)">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

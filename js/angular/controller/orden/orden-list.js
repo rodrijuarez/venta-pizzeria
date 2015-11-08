@@ -1,9 +1,8 @@
-angular.module('venta-pizzeria').controllerProvider.register('ListadoOrdenesController', function($scope, $http){
+angular.module('venta-pizzeria').controllerProvider.register('OrdenListController', function($scope, $http){
     $scope.init = function() {
         $http.get('ajax/traerOrdenes.php').
         success(function(response) {
             $scope.results = response;
-            $scope.$apply();
         }, function(response) {
             alert("hola");
         });

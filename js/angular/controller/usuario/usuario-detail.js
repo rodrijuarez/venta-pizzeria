@@ -1,6 +1,6 @@
-angular.module('venta-pizzeria').controller('usuarioFormController', function($scope, $http,urlUtils){
+angular.module('venta-pizzeria').controllerProvider.register('UsuarioDetailController', function($scope, $http,$routeParams,$location){
     $scope.guardar = function(usuario){
-        usuario.alta = (urlUtils.getUrlParameter("usuario") != undefined) ? false : true;
+        usuario.alta = 0;
         $http.post('/venta-pizzeria/submitUsuario.php',usuario).then($scope.mostrarMensaje);
     }
 
@@ -14,9 +14,8 @@ angular.module('venta-pizzeria').controller('usuarioFormController', function($s
     }
 
     $scope.mostrarMensaje = function(response){
-        alert(response.data);
+        $location.path('/usuarios');
+        $location.replace();
     }
-    if(urlUtils.getUrlParameter("usuario") != undefined){
-        $scope.traerUsuario(urlUtils.getUrlParameter("usuario"));
-    }
+    $scope.traerUsuario($routeParams.id);
 });
