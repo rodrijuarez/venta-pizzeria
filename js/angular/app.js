@@ -19,7 +19,15 @@ app.config(function($routeProvider,$controllerProvider, $compileProvider, $filte
 
     $routeProvider.when('/ordenes', {
         templateUrl : 'partials/orden/orden-list.html',
-        controller : 'ListadoOrdenesController', resolve:controllerLoadingFactory(['js/angular/controller/listadoOrdenes.js?v2'])
+        controller : 'ListadoOrdenesController', resolve:controllerLoadingFactory(['js/angular/controller/orden/listadoOrdenes.js?v2'])
+    });
+    $routeProvider.when('/orden/nueva', {
+        templateUrl : 'partials/orden/orden-create.html',
+        controller : 'OrdenCreationController', resolve:controllerLoadingFactory(['js/angular/controller/orden/orden-create.js?v3'])
+    });
+    $routeProvider.when('/orden/detalle/:id', {
+        templateUrl : 'partials/orden/orden-create.html',
+        controller : 'OrdenCreationController', resolve:controllerLoadingFactory(['js/angular/controller/orden/orden-create.js?v3'])
     });
     $routeProvider.otherwise({
         redirectTo : '/ordenes'

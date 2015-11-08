@@ -1,0 +1,38 @@
+ <div class="container">
+    <div class="page-header">
+        <h1>Orden</h1>
+    </div>
+    <form>
+        <input type="hidden" ng-model="orden.nroOden">
+        <div class="form-group">
+            <label>Domicilio del Cliente</label>
+            <input ng-model="orden.domicilioCliente" type="text" class="form-control" placeholder="Domicilio del cliente" required>
+        </div>
+        <div class="form-group">
+            <label>Telefono del Cliente</label>
+            <input ng-model="orden.telefonoCliente" type="text" name="telefonoCliente" class="form-control" placeholder="Telefono del cliente" required>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading"> Productos Solicitados
+                <button type="button" class="btn btn-default pull-right add-product" ng-click="addProducto()">+</button>
+            </div>
+            <input type="hidden" name="productosOrden" value="{{orden.productosOrden}}">
+            <div class="producto"  ng-repeat="producto in orden.productosOrden">
+                <div class="form-group">
+                    <label>Producto</label>
+                    <select required type="text" class="form-control" ng-options="item.id_producto as item.descripcion for item in productos" ng-model="producto.id_producto">
+                        <option value="" ng-if="false"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Cantidad</label>
+                    <input type="text" class="form-control" placeholder="Cantidad" ng-model="producto.cantidad">
+                </div>
+                <hr>
+            </div>
+        </div>
+        <input class="btn btn-success pull-right" type="submit" value="Save" />
+    </form>
+</div>
+</div>
+
