@@ -57,6 +57,20 @@ app.config(function($routeProvider,$controllerProvider, $compileProvider, $filte
         controller : 'ProductoDetailController', resolve:controllerLoadingFactory(['js/angular/controller/producto/producto-detail.js'])
     });
 
+
+    $routeProvider.when('/sucursales', {
+        templateUrl : 'partials/sucursal/sucursal-list.html',
+        controller : 'SucursalListController', resolve:controllerLoadingFactory(['js/angular/controller/sucursal/sucursal-list.js'])
+    });
+    $routeProvider.when('/sucursal/nueva', {
+        templateUrl : 'partials/sucursal/sucursal-create.html',
+        controller : 'SucursalCreationController', resolve:controllerLoadingFactory(['js/angular/controller/sucursal/sucursal-create.js'])
+    });
+    $routeProvider.when('/sucursal/detalle/:id', {
+        templateUrl : 'partials/sucursal/sucursal-detail.html',
+        controller : 'SucursalDetailController', resolve:controllerLoadingFactory(['js/angular/controller/sucursal/sucursal-detail.js'])
+    });
+
     $routeProvider.otherwise({
         redirectTo : '/ordenes'
     });

@@ -1,0 +1,50 @@
+ <div class="container">
+    <div class="page-header">
+        <h1>Listado de Sucursales</h1>
+        <a class="btn btn-success pull-right" href="#/sucursal/nueva">Nueva Sucursal</a>
+    </div>
+    <table class="table" ng-table="usuarios">
+        <thead>
+            <tr>
+                <td class="col-md-4">
+                    Direccion
+                </td>
+                <td class="col-md-4">
+                    Localidad
+                </td>
+                <td class="col-md-3">
+                </td>
+                <td class="col-md-2">
+                </td>
+                <td class="col-md-2">
+
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="resultado in results">
+                <td>
+                    {{ resultado.direccion }}
+                </td>
+                <td>
+                    {{ resultado.localidad }}
+                </td>
+                <td>
+                    <a class="btn btn-warning" href="#/sucursal/detalle/{{resultado.idSucursal}}">Modificar</a>
+                </td>
+                <td>
+                    <a class="btn btn-danger" ng-click="eliminarUsuario(resultado)">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div style="display: none;" id="dialog-confirm" title="Eliminar Sucursal">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Esta seguro que desea eliminar la sucursal?</p>
+</div>
+<div style="display: none;" id="dialog-success" title="Sucursal Eliminada">
+    <p>La sucursal ha sido eliminada correctamente</p>
+</div>
+<div style="display: none;" id="dialog-error" title="Error">
+    <p>Hubo un problema al eliminar la sucursal</p>
+</div>
