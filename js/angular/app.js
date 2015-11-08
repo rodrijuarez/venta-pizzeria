@@ -1,4 +1,4 @@
-var app = angular.module('venta-pizzeria', ['ngRoute']);
+var app = angular.module('venta-pizzeria', ['ngRoute','ngFileUpload']);
 
 app.config(function($routeProvider,$controllerProvider, $compileProvider, $filterProvider, $provide) {
     app.controllerProvider = $controllerProvider;
@@ -42,6 +42,21 @@ app.config(function($routeProvider,$controllerProvider, $compileProvider, $filte
         templateUrl : 'partials/usuario/usuario-detail.html',
         controller : 'UsuarioDetailController', resolve:controllerLoadingFactory(['js/angular/controller/usuario/usuario-detail.js'])
     });
+
+
+    $routeProvider.when('/productos', {
+        templateUrl : 'partials/producto/producto-list.html',
+        controller : 'ProductoListController', resolve:controllerLoadingFactory(['js/angular/controller/producto/producto-list.js'])
+    });
+    $routeProvider.when('/producto/nuevo', {
+        templateUrl : 'partials/producto/producto-create.html',
+        controller : 'ProductoCreationController', resolve:controllerLoadingFactory(['js/angular/controller/producto/producto-create.js'])
+    });
+    $routeProvider.when('/producto/detalle/:id', {
+        templateUrl : 'partials/producto/producto-detail.html',
+        controller : 'ProductoDetailController', resolve:controllerLoadingFactory(['js/angular/controller/producto/producto-detail.js'])
+    });
+
     $routeProvider.otherwise({
         redirectTo : '/ordenes'
     });

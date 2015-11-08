@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="page-header">
+        <h1>Listado de Productos</h1>
+        <a class="btn btn-success pull-right" href="#/producto/nuevo">Nuevo Producto</a>
+    </div>
+    <table class="table" ng-table="productos">
+        <thead>
+            <tr>
+                <td class="col-md-6">
+                    Descripcion
+                </td>
+                <td class="col-md-3">
+                    Precio
+                </td>
+                <td class="col-md-3">
+                </td>
+                <td class="col-md-3">
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="producto in results">
+                <td>
+                    <img ng-src="userImages/productos/{{producto.imagen}}"/>
+                </td>
+                <td>
+                    {{ producto.descripcion }}
+                </td>
+                <td>
+                    {{ producto.precio }}
+                </td>
+                <td>
+                    <a class="btn btn-warning" href="#/producto/detalle/{{ producto.idProducto }}">Modificar</a>
+                </td>
+                <td>
+                    <a class="btn btn-danger" ng-click="eliminarProducto(producto)">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
