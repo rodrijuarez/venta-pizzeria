@@ -24,10 +24,10 @@
             <tbody>
                 <tr ng-repeat="orden in results">
                     <td>
-                        {{ orden.domicilio_cliente }}
+                        {{ orden.domicilioCliente }}
                     </td>
                     <td>
-                        {{ orden.telefono_cliente }}
+                        {{ orden.telefonoCliente }}
                     </td>
                     <td>
                         <div class="btn-group">
@@ -42,7 +42,7 @@
                         </div>
                     </td>
                     <td>
-                        <a class="btn btn-warning" href="ordenForm.php?nro_orden={{ orden.nro_orden }}">Modificar</a>
+                        <a class="btn btn-warning" ng-href="#/orden/detalle/{{ orden.nroOrden }}">Modificar</a>
                     </td>
                     <td>
                         <a class="btn btn-danger" ng-click="eliminarOrden(orden)">Cancelar</a>

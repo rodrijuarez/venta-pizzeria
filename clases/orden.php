@@ -3,68 +3,69 @@ include_once("producto.php");
 include_once("ordenProducto.php");
 class Orden
 {
-    public $nro_orden;
-    public $domicilio_cliente;
-    public $telefono_cliente;
+    public $nroOrden;
+    public $domicilioCliente;
+    public $telefonoCliente;
     public $productos;
     public $ordenProducto;
-    public $paga_con_cambio;
+    public $pagaConCambio;
 
-    public static function BorrarOrden($nro_orden)
+    public static function BorrarOrden($nroOrden)
     {
-        OrdenProducto::EliminarRelacionConOrdenes($nro_orden);
+        OrdenProducto::EliminarRelacionConOrdenes($nroOrden);
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
         $consulta =$objetoAccesoDato->RetornarConsulta("
             delete
             from ordenes
-            WHERE nro_orden=:nro_orden");
-        $consulta->bindValue(':nro_orden',$nro_orden, PDO::PARAM_INT);
+            WHERE nroOrden=:nroOrden");
+        $consulta->bindValue(':nroOrden',$nroOrden, PDO::PARAM_INT);
         $consulta->execute();
         return $consulta->rowCount();
     }
 
 
-    public static function ModificarOrdenParametros($nro_orden,$domicilio_cliente,$telefono_cliente,$productosOrden,$paga_con_cambio)
+    public static function ModificarOrdenParametros($nroOrden,$domicilioCliente,$telefonoCliente,$productosOrden,$pagaConCambio)
     {
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
         $consulta =$objetoAccesoDato->RetornarConsulta("
             update ordenes
-            set domicilio_cliente=:domicilio_cliente,
-            telefono_cliente=:telefono_cliente
-            WHERE nro_orden=:nro_orden");
-        $consulta->bindValue(':nro_orden',$nro_orden, PDO::PARAM_INT);
-        $consulta->bindValue(':domicilio_cliente',$domicilio_cliente, PDO::PARAM_STR);
-        $consulta->bindValue(':telefono_cliente', $telefono_cliente, PDO::PARAM_INT);
-        $consulta->bindValue(':paga_con_cambio', $paga_con_cambio, PDO::PARAM_BOOL);
-        OrdenProducto::EliminarRelacionConOrdenes($nro_orden);
-        Orden::CrearRelacionProductosOrden($nro_orden,$productosOrden);
+            set domicilioCliente=:domicilioCliente,
+            telefonoCliente=:telefonoCliente,
+            pagaConCambio=:pagaConCambio
+            WHERE nroOrden=:nroOrden");
+        $consulta->bindValue(':nroOrden',$nroOrden, PDO::PARAM_INT);
+        $consulta->bindValue(':domicilioCliente',$domicilioCliente, PDO::PARAM_STR);
+        $consulta->bindValue(':telefonoCliente', $telefonoCliente, PDO::PARAM_INT);
+        $consulta->bindValue(':pagaConCambio', $pagaConCambio, PDO::PARAM_BOOL);
+        OrdenProducto::EliminarRelacionConOrdenes($nroOrden);
+        Orden::CrearRelacionProductosOrden($nroOrden,$productosOrden);
         return $consulta->execute();
     }
 
     public function mostrarDatos()
     {
-        return "Metodo mostrar:".$this->domicilio_cliente."  ".$this->telefono_cliente;
+        return "Metodo mostrar:".$this->domicilioCliente."  ".$this->telefonoCliente;
     }
 
-    public static function InsertarLaOrdenParametros($domicilio_cliente,$telefono_cliente,$productosOrden,$paga_con_cambio)
+    public static function InsertarLaOrdenParametros($domicilioCliente,$telefonoCliente,$productosOrden,$pagaConCambio)
     {
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-        $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into ordenes (domicilio_cliente,telefono_cliente,paga_con_cambio)values(:domicilio_cliente,:telefono_cliente,:paga_con_cambio)");
-        $consulta->bindValue(':domicilio_cliente',$domicilio_cliente, PDO::PARAM_STR);
-        $consulta->bindValue(':telefono_cliente', $telefono_cliente, PDO::PARAM_INT);
-        $consulta->bindValue(':paga_con_cambio', $paga_con_cambio, PDO::PARAM_INT);
+        $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into ordenes (domicilioCliente,telefonoCliente,pagaConCambio)values(:domicilioCliente,:telefonoCliente,:pagaConCambio)");
+        $consulta->bindValue(':domicilioCliente',$domicilioCliente, PDO::PARAM_STR);
+        $consulta->bindValue(':telefonoCliente', $telefonoCliente, PDO::PARAM_INT);
+        $consulta->bindValue(':pagaConCambio', $pagaConCambio, PDO::PARAM_INT);
         $consulta->execute();
-        $nro_orden = $objetoAccesoDato->RetornarUltimoIdInsertado();
-        Orden::CrearRelacionProductosOrden($nro_orden,$productosOrden);
-        return $nro_orden;
+        $nroOrden = $objetoAccesoDato->RetornarUltimoIdInsertado();
+        Orden::CrearRelacionProductosOrden($nroOrden,$productosOrden);
+        return $nroOrden;
     }
 
-    public static function CrearRelacionProductosOrden($nro_orden,$productos){
+    public static function CrearRelacionProductosOrden($nroOrden,$productos){
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
         foreach ($productos as $producto) {
-            $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into ordenes_productos (nro_orden,id_producto,cantidad)values(:nro_orden,:id_producto,:cantidad)");
-            $consulta->bindValue(':nro_orden',$nro_orden, PDO::PARAM_INT);
-            $consulta->bindValue(':id_producto', $producto->id_producto, PDO::PARAM_INT);
+            $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into ordenes_productos (nroOrden,idProducto,cantidad)values(:nroOrden,:idProducto,:cantidad)");
+            $consulta->bindValue(':nroOrden',$nroOrden, PDO::PARAM_INT);
+            $consulta->bindValue(':idProducto', $producto->idProducto, PDO::PARAM_INT);
             $consulta->bindValue(':cantidad', $producto->cantidad, PDO::PARAM_INT);
             $consulta->execute();
         }
@@ -73,44 +74,44 @@ class Orden
     public static function TraerTodasLasOrdenes()
     {
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-        $consulta =$objetoAccesoDato->RetornarConsulta("select ordenes.nro_orden, domicilio_cliente, telefono_cliente,paga_con_cambio, productos.id_producto, productos.descripcion, productos.precio,ordenes_productos.cantidad from ordenes INNER JOIN ordenes_productos ON ordenes_productos.nro_orden = ordenes.nro_orden INNER JOIN productos ON productos.id_producto = ordenes_productos.id_producto");
+        $consulta =$objetoAccesoDato->RetornarConsulta("select ordenes.nroOrden, domicilioCliente, telefonoCliente,pagaConCambio, productos.idProducto, productos.descripcion, productos.precio,ordenes_productos.cantidad from ordenes INNER JOIN ordenes_productos ON ordenes_productos.nroOrden = ordenes.nroOrden INNER JOIN productos ON productos.idProducto = ordenes_productos.idProducto");
         $consulta->execute();
 
         while (($row = $consulta->fetch(PDO::FETCH_ASSOC)) !== false) {
             $orden = new Orden();
-            $orden->nro_orden = $row["nro_orden"];
-            $orden->domicilio_cliente = $row["domicilio_cliente"];
-            $orden->telefono_cliente = $row["telefono_cliente"];
-            $orden->paga_con_cambio = $row["paga_con_cambio"];
+            $orden->nroOrden = $row["nroOrden"];
+            $orden->domicilioCliente = $row["domicilioCliente"];
+            $orden->telefonoCliente = $row["telefonoCliente"];
+            $orden->pagaConCambio = $row["pagaConCambio"];
             $producto = new Producto();
-            $producto->id_producto = $row["id_producto"];
+            $producto->idProducto = $row["idProducto"];
             $producto->descripcion = $row["descripcion"];
             $producto->precio = $row["precio"];
-            if(!isset($result[$orden->nro_orden])){
-                $result[$orden->nro_orden]= $orden;
+            if(!isset($result[$orden->nroOrden])){
+                $result[$orden->nroOrden]= $orden;
             }
-            $result[$orden->nro_orden]->productos[]=$producto;
+            $result[$orden->nroOrden]->productos[]=$producto;
         }
         return $result;
     }
 
-    public static function TraerUnaOrden($nro_orden)
+    public static function TraerUnaOrden($nroOrden)
     {
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-        $consulta =$objetoAccesoDato->RetornarConsulta("select ordenes.nro_orden, domicilio_cliente, telefono_cliente,paga_con_cambio, productos.id_producto, productos.descripcion, productos.precio,ordenes_productos.cantidad from ordenes INNER JOIN ordenes_productos ON ordenes_productos.nro_orden = ordenes.nro_orden INNER JOIN productos ON productos.id_producto = ordenes_productos.id_producto where ordenes.nro_orden = $nro_orden");
+        $consulta =$objetoAccesoDato->RetornarConsulta("select ordenes.nroOrden, domicilioCliente, telefonoCliente,pagaConCambio, productos.idProducto, productos.descripcion, productos.precio,ordenes_productos.cantidad from ordenes INNER JOIN ordenes_productos ON ordenes_productos.nroOrden = ordenes.nroOrden INNER JOIN productos ON productos.idProducto = ordenes_productos.idProducto where ordenes.nroOrden = $nroOrden");
         $consulta->execute();
         $result = new Orden();
         while (($row = $consulta->fetch(PDO::FETCH_ASSOC)) !== false) {
-            $result->nro_orden = $row["nro_orden"];
-            $result->domicilio_cliente = $row["domicilio_cliente"];
-            $result->telefono_cliente = $row["telefono_cliente"];
-            $result->paga_con_cambio = $row["paga_con_cambio"];
+            $result->nroOrden = $row["nroOrden"];
+            $result->domicilioCliente = $row["domicilioCliente"];
+            $result->telefonoCliente = $row["telefonoCliente"];
+            $result->pagaConCambio = $row["pagaConCambio"];
             $producto = new Producto();
             $producto->precio = $row["precio"];
             $producto->descripcion = $row["descripcion"];
             $ordenProducto = new OrdenProducto();
-            $ordenProducto->id_producto = $row["id_producto"];
-            $ordenProducto->nro_orden = $row["nro_orden"];
+            $ordenProducto->idProducto = $row["idProducto"];
+            $ordenProducto->nroOrden = $row["nroOrden"];
             $ordenProducto->cantidad = $row["cantidad"];
             $result->ordenProducto[] = $ordenProducto;
             $result->productos[] = $producto;

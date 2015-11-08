@@ -1,0 +1,41 @@
+ <div class="container">
+    <div class="page-header">
+        <h1>Orden</h1>
+    </div>
+    <form>
+        <input type="hidden" ng-model="orden.nroOrden">
+        <div class="form-group">
+            <label>Domicilio del Cliente</label>
+            <input ng-model="orden.domicilioCliente" type="text" class="form-control" placeholder="Domicilio del cliente" required>
+        </div>
+        <div class="form-group">
+            <label>Telefono del Cliente</label>
+            <input ng-model="orden.telefonoCliente" type="text" name="telefonoCliente" class="form-control" placeholder="Telefono del cliente" required>
+        </div>
+        <div class="checkbox">
+            <label><input ng-model="orden.pagaConCambio" type="checkbox" name="pagaConCambio" ng-true-value="1" ng-false-value="0">Paga con cambio</label>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading"> Productos Solicitados
+                <button type="button" class="btn btn-default pull-right add-product" ng-click="addProducto()">+</button>
+            </div>
+            <input type="hidden" name="productos" value="{{orden.productos}}">
+            <div class="producto"  ng-repeat="producto in orden.ordenProducto">
+                <div class="form-group">
+                    <label>Producto</label>
+                    <select required type="text" class="form-control" ng-options="item.idProducto as item.descripcion for item in productos" ng-model="producto.idProducto">
+                        <option value="" ng-if="false"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Cantidad</label>
+                    <input type="text" class="form-control" placeholder="Cantidad" ng-model="producto.cantidad">
+                </div>
+                <hr>
+            </div>
+        </div>
+        <input class="btn btn-success pull-right" ng-click="guardar(orden)" type="submit" value="Save" />
+    </form>
+</div>
+</div>
+

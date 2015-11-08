@@ -1,26 +1,26 @@
 <?php
 class producto
 {
-	public $id_producto;
+	public $idProducto;
 	public $descripcion;
 	public $precio;
 	public $imagen;
 
-	public static function BorrarProducto($id_producto)
+	public static function BorrarProducto($idProducto)
 	{
-		OrdenProducto::EliminarRelacionConProductos($id_producto);
+		OrdenProducto::EliminarRelacionConProductos($idProducto);
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 		$consulta =$objetoAccesoDato->RetornarConsulta("
 			delete
 			from productos
-			WHERE id_producto=:id_producto");
-		$consulta->bindValue(':id_producto',$id_producto, PDO::PARAM_INT);
+			WHERE idProducto=:idProducto");
+		$consulta->bindValue(':idProducto',$idProducto, PDO::PARAM_INT);
 		$consulta->execute();
 		return $consulta->rowCount();
 	}
 
 
-	public static function ModificarProductoParametros($id_producto,$descripcion,$precio,$imagen)
+	public static function ModificarProductoParametros($idProducto,$descripcion,$precio,$imagen)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 		$consulta =$objetoAccesoDato->RetornarConsulta("
@@ -28,8 +28,8 @@ class producto
 			set descripcion=:descripcion,
 			precio=:precio,
 			imagen=:imagen
-			WHERE id_producto=:id_producto");
-		$consulta->bindValue(':id_producto',$id_producto, PDO::PARAM_INT);
+			WHERE idProducto=:idProducto");
+		$consulta->bindValue(':idProducto',$idProducto, PDO::PARAM_INT);
 		$consulta->bindValue(':descripcion',$descripcion, PDO::PARAM_STR);
 		$consulta->bindValue(':precio', $precio, PDO::PARAM_INT);
 		$consulta->bindValue(':imagen', $imagen, PDO::PARAM_STR);
@@ -57,15 +57,15 @@ class producto
 	public static function TraerTodosLosProductos()
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-		$consulta =$objetoAccesoDato->RetornarConsulta("select id_producto,descripcion, precio,imagen from productos");
+		$consulta =$objetoAccesoDato->RetornarConsulta("select idProducto,descripcion, precio,imagen from productos");
 		$consulta->execute();
 		return $consulta->fetchAll(PDO::FETCH_CLASS, "producto");
 	}
 
-	public static function TraerUnProducto($id_producto)
+	public static function TraerUnProducto($idProducto)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-		$consulta =$objetoAccesoDato->RetornarConsulta("select id_producto, descripcion, precio from productos where id_producto = $id_producto");
+		$consulta =$objetoAccesoDato->RetornarConsulta("select idProducto, descripcion, precio from productos where idProducto = $idProducto");
 		$consulta->execute();
 		$result= $consulta->fetchObject('producto');
 		return $result;
@@ -75,11 +75,11 @@ class producto
 
 
 
-	public static function TraerUnProductoStockParamNombre($id_producto,$stock)
+	public static function TraerUnProductoStockParamNombre($idProducto,$stock)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-		$consulta =$objetoAccesoDato->RetornarConsulta("select descripcion, precio from productos  WHERE id_producto=:id_producto");
-		$consulta->bindValue(':id_producto', $id_producto, PDO::PARAM_INT);
+		$consulta =$objetoAccesoDato->RetornarConsulta("select descripcion, precio from productos  WHERE idProducto=:idProducto");
+		$consulta->bindValue(':idProducto', $idProducto, PDO::PARAM_INT);
 		$consulta->execute();
 		$result= $consulta->fetchObject('producto');
 		return $result;
@@ -87,11 +87,11 @@ class producto
 
 	}
 
-	public static function TraerUnProductoStockParamNombreArray($id_producto,$stock)
+	public static function TraerUnProductoStockParamNombreArray($idProducto,$stock)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-		$consulta =$objetoAccesoDato->RetornarConsulta("select descripcion, precio from productos  WHERE id_producto=:id_producto");
-		$consulta->execute(array(':id_producto'=> $id_producto));
+		$consulta =$objetoAccesoDato->RetornarConsulta("select descripcion, precio from productos  WHERE idProducto=:idProducto");
+		$consulta->execute(array(':idProducto'=> $idProducto));
 		$consulta->execute();
 		$result= $consulta->fetchObject('producto');
 		return $result;
