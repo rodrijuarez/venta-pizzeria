@@ -9,34 +9,10 @@ angular.module('venta-pizzeria').controllerProvider.register('SucursalCreationCo
         $location.replace();
     }
     $scope.init = function(){
-        $scope.map = {center: {latitude: -34.6122402, longitude: -58.394864 }, zoom: 14, bounds: {} };
-        $scope.options = {scrollwheel: true};
-        $scope.locales = [];
-        $scope.locales.push({id:1,latitude:-34.6122402,longitude:-58.394864,title:'Ugi'});
-        $scope.events = {
-            places_changed: function (searchBox) {
-                var place = searchBox.getPlaces();
-                if (!place || place == 'undefined' || place.length == 0) {
-                    console.log('no place data :(');
-                        return;
-                    }
-
-                    $scope.map = {
-                        "center": {
-                            "latitude": place[0].geometry.location.lat(),
-                            "longitude": place[0].geometry.location.lng()
-                        },
-                        "zoom": 18
-                    };
-                    $scope.marker = {
-                        id: 0,
-                        coords: {
-                            latitude: place[0].geometry.location.lat(),
-                            longitude: place[0].geometry.location.lng()
-                        }
-                    };
-                }
-            };
-        }
-        $scope.init();
-    });
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 8
+      });
+    }
+    $scope.init();
+});

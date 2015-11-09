@@ -10,14 +10,11 @@
         </div>
         <div class="row">
             <div class="col-lg-2"></div>
-            <div class="col-lg-8">
-                <ui-gmap-google-map ng-cloak center="map.center" zoom="map.zoom" options="options">
-                <ui-gmap-search-box template="'partials/sucursal/sucursal-searchbox.html'" ng-model="sucursal.direccion" parentdiv="'searchBoxParent'" events="events"></ui-gmap-search-box>
-            </ui-gmap-google-map>
+            <div class="col-lg-8" id="map">
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <input class="btn btn-success pull-right" ng-click="guardar(sucursal)" value="Guardar" />
-    </div>
-</form>
+        <div class="row">
+            <input class="btn btn-success pull-right" ng-click="guardar(sucursal)" value="Guardar" />
+        </div>
+    </form>
 </div>
