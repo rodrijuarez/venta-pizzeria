@@ -17,5 +17,13 @@ angular.module('venta-pizzeria').controllerProvider.register('UsuarioDetailContr
         $location.path('/usuarios');
         $location.replace();
     }
-    $scope.traerUsuario($routeParams.id);
+    $scope.init = function(){
+        $http.get('ajax/traerSucursales.php').
+        success(function(response) {
+            $scope.sucursales = response;
+            $scope.traerUsuario($routeParams.id);
+        }, function(response) {
+        });
+    }
+    $scope.init();
 });
