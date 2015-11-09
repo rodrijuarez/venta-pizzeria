@@ -81,7 +81,7 @@ app.config(function($routeProvider,$controllerProvider, $compileProvider, $filte
     });
     $routeProvider.when('/sucursal/detalle/:id', {
         templateUrl : 'partials/sucursal/sucursal-detail.html',
-        controller : 'SucursalDetailController', resolve:controllerLoadingFactory(['js/angular/controller/sucursal/sucursal-detail.js'])
+        controller : 'SucursalDetailController', resolve:controllerLoadingFactory(['js/angular/controller/sucursal/sucursal-detail.js','https://maps.googleapis.com/maps/api/js?key=AIzaSyCxb37T9TC2xma21OAQ5mptPDQXNi-n_uA&libraries=places'])
     });
 
     $routeProvider.otherwise({
