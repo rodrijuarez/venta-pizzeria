@@ -5,7 +5,11 @@
     <form>
     <input id="searchBox" class="searchBox" type="text" placeholder="Direccion" ng-model="sucursal.direccion">
         <div class="form-group">
-            <input type="text" ng-model="sucursal.localidad" class="form-control" placeholder="Localidad">
+            <select ng-model="sucursal.localidad" class="form-control" placeholder="Localidad">
+                <option value="1">Turdera</option>
+                <option value="2">Temperley</option>
+                <option value="3">Otro</option>
+            </select>
         </div>
         <div class="row">
             <div class="col-lg-2"></div>
