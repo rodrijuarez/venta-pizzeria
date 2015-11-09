@@ -77,7 +77,7 @@ app.config(function($routeProvider,$controllerProvider, $compileProvider, $filte
     });
     $routeProvider.when('/sucursal/nueva', {
         templateUrl : 'partials/sucursal/sucursal-create.html',
-        controller : 'SucursalCreationController', resolve:controllerLoadingFactory(['js/angular/controller/sucursal/sucursal-create.js','https://maps.googleapis.com/maps/api/js?key=AIzaSyCxb37T9TC2xma21OAQ5mptPDQXNi-n_uA&'])
+        controller : 'SucursalCreationController', resolve:controllerLoadingFactory(['js/angular/controller/sucursal/sucursal-create.js','https://maps.googleapis.com/maps/api/js?key=AIzaSyCxb37T9TC2xma21OAQ5mptPDQXNi-n_uA&libraries=places'])
     });
     $routeProvider.when('/sucursal/detalle/:id', {
         templateUrl : 'partials/sucursal/sucursal-detail.html',
@@ -94,11 +94,11 @@ function ($rootScope, $location, $cookies, $http) {
         if ($rootScope.globals.currentUser) {
             $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
         }
-
+/*
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to login page if not logged in
             if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
                 $location.path('/login');
             }
-        });
+        }); */
     }]);
