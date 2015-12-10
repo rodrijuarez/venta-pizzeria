@@ -33,11 +33,13 @@
                     <a class="btn btn-warning" href="#/sucursal/detalle/{{resultado.idSucursal}}">Modificar</a>
                 </td>
                 <td>
-                    <a class="btn btn-danger" ng-click="eliminarUsuario(resultado)">Eliminar</a>
+                    <a class="btn btn-danger" ng-click="eliminarSucursal(resultado)">Eliminar</a>
                 </td>
             </tr>
         </tbody>
     </table>
+    <h1>Stack Overflow</h1>
+    <feed summary="true" url="http://stackoverflow.com/feeds/tag?tagnames=angularjs&sort=newest" count="5"/>
 </div>
 <div style="display: none;" id="dialog-confirm" title="Eliminar Sucursal">
     <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Esta seguro que desea eliminar la sucursal?</p>

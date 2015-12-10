@@ -2,7 +2,7 @@
 <html ng-app="venta-pizzeria">
 <head>
     <title> Listado de Ordenes</title>
-
+<script type="text/javascript" src="https://www.google.com/jsapi?autoload=%7B%22modules%22%3A%5B%7B%22name%22%3A%22feeds%22%2C%22version%22%3A%221.0%22%2C%22nocss%22%3Atrue%7D%5D%7D"></script>
     <meta charset="utf-8">
     <script src="http://code.ionicframework.com/1.1.0/js/ionic.bundle.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,11 +28,26 @@
     <script src="js/angular/app.js"></script>
     <script src="js/angular/service/authentication/authentication.js"></script>
     <script src="js/angular/service/utils/utils.js"></script>
+    <script src="js/jsPDF-0.9.0rc2/jspdf.js"></script>
+    <script src="js/jsPDF-0.9.0rc2/jspdf.plugin.addimage.js"></script>
+    <script src="js/jsPDF-0.9.0rc2/jspdf.plugin.from_html.js"></script>
+    <script src="js/jsPDF-0.9.0rc2/jspdf.plugin.ie_below_9_shim.js"></script>
+    <script src="js/jsPDF-0.9.0rc2/jspdf.plugin.sillysvgrenderer.js"></script>
+    <script src="js/jsPDF-0.9.0rc2/jspdf.plugin.split_text_to_size.js"></script>
+    <script src="js/jsPDF-0.9.0rc2/jspdf.plugin.standard_fonts_metrics.js"></script>
+    <script src="js/jsPDF-0.9.0rc2/libs/FileSaver.js/FileSaver.js"></script>
+    <script src="js/jsPDF-0.9.0rc2/libs/Blob.js/Blob.js"></script>
+    <script src="js/jsPDF-0.9.0rc2/libs/Blob.js/BlobBuilder.js"></script>
+
+    <script src="js/jsPDF-0.9.0rc2/libs/Deflate/deflate.js"></script>
+    <script src="js/jsPDF-0.9.0rc2/libs/Deflate/adler32cs.js"></script>
+
 
     <link href="css/ui-lightness/jquery-ui-1.9.2.custom.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <script src="js/jquery-1.8.3.js"></script>
     <script src="js/jquery-ui-1.9.2.custom.js"></script>
+<script src="http://siddii.github.io/angular-feeds/app/angular-feeds/angular-feeds.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">

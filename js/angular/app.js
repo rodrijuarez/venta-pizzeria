@@ -1,5 +1,5 @@
 angular.module('Authentication', []);
-var app = angular.module('venta-pizzeria', ['ngRoute','ngFileUpload','ngCookies','Authentication', 'ngCsv','uiGmapgoogle-maps']);
+var app = angular.module('venta-pizzeria', ['ngRoute','ngFileUpload','ngCookies','Authentication', 'ngCsv','uiGmapgoogle-maps', 'feeds']);
 
 app.config(function($routeProvider,$controllerProvider, $compileProvider, $filterProvider, $provide,uiGmapGoogleMapApiProvider) {
     app.controllerProvider = $controllerProvider;

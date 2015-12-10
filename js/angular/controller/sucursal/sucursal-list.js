@@ -19,7 +19,7 @@ angular.module('venta-pizzeria').controllerProvider.register('SucursalListContro
                     var method = 'POST';
                     var url = 'ajax/eliminarSucursal.php';
                     var data = {
-                        'sucursal' : sucursal.sucursal
+                        'sucursal' : sucursal.idSucursal
                     };
                     $http({
                         method: method,

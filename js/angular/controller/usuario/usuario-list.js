@@ -1,4 +1,18 @@
 angular.module('venta-pizzeria').controllerProvider.register('UsuarioListController', function($scope, $http){
+    $scope.exportPdf = function(users){
+        var doc = new jsPDF();
+
+        doc.setFontSize(40);
+        doc.text(35, 25, "Usuarios");
+        var height = 45;
+        for(user in users){
+            doc.text(25,height,"Usuario: ")
+            doc.text(80,height,users[user].usuario)
+            height+=50;
+        }
+        doc.save('usuarios.pdf');
+    }
+
     $scope.init = function() {
         $http.get('ajax/traerUsuarios.php').
         success(function(response) {

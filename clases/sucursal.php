@@ -5,14 +5,14 @@ class sucursal
 	public $direccion;
 	public $localidad;
 
-	public static function BorrarSucursal($sucursal)
+	public static function BorrarSucursal($idSucursal)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 		$consulta =$objetoAccesoDato->RetornarConsulta("
 			delete
 			from sucursales
-			WHERE sucursal=:sucursal");
-		$consulta->bindValue(':sucursal',$sucursal, PDO::PARAM_STR);
+			WHERE idSucursal=:idSucursal");
+		$consulta->bindValue(':idSucursal',$idSucursal, PDO::PARAM_STR);
 		$consulta->execute();
 		return $consulta->rowCount();
 	}
